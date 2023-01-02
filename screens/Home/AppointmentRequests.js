@@ -2,41 +2,31 @@ import {StyleSheet, Text, View, Dimensions, FlatList} from 'react-native';
 import React, {useState, useEffect, useContext} from 'react';
 import {scale} from 'react-native-size-matters';
 import CardsAppo from '../../src/component/CardsAppo';
-// import findNextAppo from '../../firebase/firebase-config';
-import {
-  fetchAppoNextFrom,
-  fetchAppoNextTo,
-  fetchAppoNextToAFrom,
-} from '../../firebase/apiService';
+
+import {fetchAppointmentRequestsTo} from '../../firebase/AppointmentRequestsF';
 import {UserInfoContext} from '../../Context/UserContext';
 
 const {width, height} = Dimensions.get('screen');
 
-const Body = () => {
+const AppointmentRequests = () => {
   const [arrydata, Setarrydata] = useState();
-  const [postsFromTo, SetPostsFromTo] = useState([]);
   const [postsTo, SetPostsTo] = useState([]);
-  // const [postsFromTo, SetpostsFromTo] = useState([]);
 
-  const User = useContext(UserInfoContext);
+  const Admin = useContext(UserInfoContext);
 
   useEffect(() => {
     const arry = [];
     arry.push(...postsTo);
-    arry.push(...postsFromTo);
-
     Setarrydata(
       arry.sort(function (a, b) {
         return a.date - b.date;
       }),
     );
-  }, [postsFromTo, postsTo]);
+  }, [postsTo]);
 
   getPosts();
   function getPosts() {
-    // fetchAppoNextToAFrom(User.email, SetPostsFromTo);
-    fetchAppoNextFrom(User.email, SetPostsFromTo);
-    fetchAppoNextTo(User.email, SetPostsTo);
+    fetchAppointmentRequestsTo(Admin.email, SetPostsTo);
   }
   // console.log('postsTo', postsFromTo);
 
@@ -46,7 +36,7 @@ const Body = () => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.viewtitle}>
-        <Text style={styles.title}>The Next Appointment</Text>
+        <Text style={styles.title}>Appointment Requests</Text>
       </View>
       <FlatList
         data={arrydata}
@@ -55,7 +45,7 @@ const Body = () => {
         horizontal={true}
         ListEmptyComponent={
           <Text style={styles.altText}>
-            There are no upcoming Appointments to display
+            There are no appointments requests to display
           </Text>
         }
       />
@@ -63,7 +53,7 @@ const Body = () => {
   );
 };
 
-export default Body;
+export default AppointmentRequests;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -87,3 +77,7 @@ const styles = StyleSheet.create({
     marginHorizontal: scale(22),
   },
 });
+
+/*
+AppointmentRequests
+*/

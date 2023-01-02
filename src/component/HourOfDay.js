@@ -5,8 +5,8 @@ import {format} from 'date-fns';
 
 const HourOfDay = props => {
   const {data, indexs, select, Setselect, SetAppointment} = props;
-
-  const [bookedUp, SetbookedUp] = useState(data.bookedUp);
+  const {bookedUp, Acceptable, isYou} = data;
+  // const [bookedUp, SetbookedUp] = useState(data.bookedUp);
 
   // console.log(' data ', data);
   const time = format(data.time, ' hh : mm aa');
@@ -16,17 +16,31 @@ const HourOfDay = props => {
     // SetbookedUp(true);
     // console.log('sele ', select, ' ind ', indexs);
   };
+  /*
+  const opj = {
+            id: id,
+            time: item,
+            bookedUp: false,
+            Acceptable: false,
+            isYou: false,
+            isHe: true,
+          };
+  */
   return (
     <TouchableOpacity
       style={
         indexs == select && bookedUp == false
-          ? styles.containerSelected
-          : indexs == select && bookedUp == true
-          ? styles.containerSelectedbookedUpY
-          : indexs != select && bookedUp == true
-          ? styles.containerSelectedbookedUpY
+          ? [styles.container, styles.containerSelected]
+          : bookedUp == 'bookedUp' && Acceptable == 'accept' && isYou == false
+          ? [styles.container, styles.containerSelectedUnBookedUpUnYou]
+          : bookedUp == 'bookedUp' && Acceptable == 'accept' && isYou == true
+          ? [styles.container, styles.containerSelectedbookedUpYou]
+          : bookedUp == 'bookedUp' && Acceptable == 'waiting' && isYou == false
+          ? [styles.container, styles.containerSelectedUnBookedUpUnYou]
+          : bookedUp == 'bookedUp' && Acceptable == 'waiting' && isYou == true
+          ? [styles.container, styles.containerSelectedbookedUpYou]
           : indexs != select && bookedUp == false
-          ? styles.container
+          ? [styles.container, styles.containerUnSelected]
           : null
       }
       onPress={() => {
@@ -35,13 +49,19 @@ const HourOfDay = props => {
       <Text
         style={
           indexs == select && bookedUp == false
-            ? styles.textSelected
-            : indexs == select && bookedUp == true
-            ? styles.textSelectedbookedUp
-            : indexs != select && bookedUp == true
-            ? styles.textSelectedbookedUp
+            ? [styles.text, styles.textSelectedunBookedUp]
+            : bookedUp == 'bookedUp' && Acceptable == 'accept' && isYou == false
+            ? [styles.text, styles.textSelectedbookedUp]
+            : bookedUp == 'bookedUp' && Acceptable == 'accept' && isYou == true
+            ? [styles.text, styles.textSelectedbookedUp]
+            : bookedUp == 'bookedUp' &&
+              Acceptable == 'waiting' &&
+              isYou == false
+            ? [styles.text, styles.textSelectedbookedUp]
+            : bookedUp == 'bookedUp' && Acceptable == 'waiting' && isYou == true
+            ? [styles.text, styles.textSelectedbookedUp]
             : indexs != select && bookedUp == false
-            ? styles.text
+            ? [styles.text, styles.textUnSelectedunBookedUp]
             : null
         }>
         {time}
@@ -58,47 +78,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: scale(8),
     borderRadius: 20,
-    padding: scale(10),
-    backgroundColor: 'white',
+    // padding: scale(10),
+    paddingHorizontal: scale(15),
+    paddingVertical: scale(7),
   },
   containerSelected: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: scale(8),
-    borderRadius: 20,
-    padding: scale(10),
     backgroundColor: '#aae08f',
   },
-  text: {
-    color: 'black',
-    fontSize: scale(20),
-    margin: scale(1),
-  },
-  textSelected: {
-    color: '#ffffff',
-    fontSize: scale(20),
-    margin: scale(1),
-  },
-  containerSelectedbookedUp: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: scale(8),
-    borderRadius: 20,
-    padding: scale(10),
+  containerSelectedbookedUpYou: {
     backgroundColor: '#0DE090',
   },
-  containerSelectedbookedUpY: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: scale(8),
-    borderRadius: 20,
-    padding: scale(10),
+  containerSelectedUnBookedUpUnYou: {
     backgroundColor: '#E08F8F',
+  },
+  containerUnSelected: {
+    backgroundColor: '#ffffff',
+  },
+  text: {
+    fontSize: scale(20),
+    margin: scale(1),
+  },
+  textUnSelectedunBookedUp: {
+    color: '#000000',
+  },
+  textSelectedunBookedUp: {
+    color: '#ffffff',
   },
   textSelectedbookedUp: {
     color: '#ffffff',
-    fontSize: scale(20),
-    margin: scale(1),
   },
 });
 // error color E08F8F

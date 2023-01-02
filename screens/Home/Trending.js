@@ -1,41 +1,34 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import Cardspersonal from '../../src/component/Cardspersonal';
 import {scale} from 'react-native-size-matters';
+import {fetchPersons} from '../../firebase/Trending';
 
-/*firestore()
-  .collection('UserAccount')
-  .limit(4)
-  .get()
-  .then(documenrSnapshot => {
-    console.log(documenrSnapshot);
-  });
-*/
-const arry = [];
+import {UserInfoContext} from '../../Context/UserContext';
 
-firestore()
-  .collection('UserAccount')
-  .where('businessAccount', '==', true)
-  .limit(7)
-  .onSnapshot(async querySnapshot => {
-    querySnapshot.docChanges().forEach(i => arry.push(i.doc.data()));
-  });
+const Trending = props => {
+  const {navigation} = props;
+  // const Persons = [];
+  const [Personsarry, SetPersonsarry] = useState();
+  const User = useContext(UserInfoContext);
 
-const Trending = () => {
+  fetchPersons(User, SetPersonsarry);
+  console.log('set data');
+
   const renderItem = ({item, index}) => {
-    return <Cardspersonal data={item} />;
+    return <Cardspersonal data={item} navigation={navigation} />;
   };
   return (
     <View>
       <FlatList
-        data={arry}
+        data={Personsarry}
         renderItem={renderItem}
         horizontal={true}
         ListEmptyComponent={
           <Text style={styles.altText}>
-            Sorry, For some reason there is no data to display Try to make sure
-            you are connected to the Internet or contact support
+            Sorry, for some reason there is no data to display, try to make sure
+            you are connected to the internet or contact support
           </Text>
         }
       />

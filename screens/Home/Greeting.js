@@ -19,7 +19,11 @@ const Greeting = props => {
   return (
     <View>
       <Text style={styles.text}>
-        Good {greeting()} , {name}
+        Good {greeting()} ,{' '}
+        {name.substring(
+          0,
+          name.indexOf(' ') == -1 ? name.length : name.indexOf(' '),
+        )}
       </Text>
     </View>
   );

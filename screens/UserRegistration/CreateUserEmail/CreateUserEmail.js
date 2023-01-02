@@ -14,31 +14,27 @@ import {
   HandlerPassword,
   HandlerEmail,
   AlertHandler,
+  HandlerConfirmPassword,
 } from '../Handlerinput';
 import {scale} from 'react-native-size-matters';
 
 import {ImageBackground} from 'react-native';
-import FireSignUp from './SignUpFirebase';
+import FireSignUp from './CreateUserEmailFirebase';
 const {height} = Dimensions.get('screen');
 const {width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/MaterialIcons';
-const SignUp = ({navigation, route}) => {
+import ModalMessage from '../../../src/component/ModalMessage';
+const CreateUserEmail = ({navigation, route}) => {
   // const {setuser} = route.params;
-
-  const [inputName, changeInputName] = useState({
-    valueUserName: '',
-    isValidUserName: '',
-    touched: false,
+  const [modalMV, setModalMV] = useState({
+    Visible: false,
+    Message: '',
+    type: '',
   });
+
   const [inputEmail, changeInputEmail] = useState({
     valueEmail: '',
     isValidEmail: '',
-    touched: false,
-  });
-
-  const [inputPhone, changeInputPhone] = useState({
-    valuePhone: '',
-    isValidPhone: '',
     touched: false,
   });
 
@@ -48,26 +44,18 @@ const SignUp = ({navigation, route}) => {
     touched: false,
   });
 
+  const [inputConfirmPassword, changeInputConfirmPassword] = useState({
+    valueConfirmPassword: '',
+    isValidConfirmPassword: '',
+    touched: false,
+  });
+
   const submitHandler = (types, inputVal) => {
-    if (types == 'username') {
-      changeInputName({
-        valueUserName: inputVal,
-        touched: true,
-        isValidUserName: HandlerUserName(inputVal),
-      });
-    }
     if (types == 'email') {
       changeInputEmail({
         valueEmail: inputVal,
         touched: true,
         isValidEmail: HandlerEmail(inputVal),
-      });
-    }
-    if (types == 'Phone') {
-      changeInputPhone({
-        valuePhone: inputVal,
-        touched: true,
-        isValidEmail: true,
       });
     }
     if (types == 'password') {
@@ -77,15 +65,27 @@ const SignUp = ({navigation, route}) => {
         isValidPassword: HandlerPassword(inputVal),
       });
     }
+
+    if (types == 'confirmPassword') {
+      changeInputConfirmPassword({
+        valueConfirmPassword: inputVal,
+        touched: true,
+        isValidConfirmPassword: HandlerConfirmPassword(
+          inputPassword.valuePassword,
+          inputVal,
+        ),
+      });
+    }
   };
   const onPressRegister = () => {
-    inputName.isValidUserName == true &&
     inputEmail.isValidEmail == true &&
-    inputPassword.isValidPassword == true
+    inputPassword.isValidPassword == true &&
+    inputConfirmPassword.isValidConfirmPassword == true
       ? FireSignUp(
           inputEmail.valueEmail,
           inputPassword.valuePassword,
           navigation,
+          setModalMV,
         )
       : changeInputEmail({
           valueEmail: inputEmail.valueEmail,
@@ -97,48 +97,38 @@ const SignUp = ({navigation, route}) => {
       touched: true,
       isValidPassword: HandlerPassword(inputPassword.valuePassword),
     });
-    changeInputName({
-      valueUserName: inputName.valueUserName,
+    changeInputConfirmPassword({
+      valueConfirmPassword: inputConfirmPassword.valueConfirmPassword,
       touched: true,
-      isValidUserName: HandlerUserName(inputName.valueUserName),
+      isValidConfirmPassword: HandlerConfirmPassword(
+        inputPassword.valuePassword,
+        inputConfirmPassword.valueConfirmPassword,
+      ),
     });
   };
+
   const localImage = require('../../../image/imageBackgroundSignUp.png');
   const taitleText = {
     taitle: 'Create\nAccount',
     Arrow: <Icon name="arrow-right-alt" size={scale(45)} color="#ffffff" />,
   };
+
   return (
-    <View>
+    <View style={styles.container}>
       <StatusBar backgroundColor={'#4f5460'} barStyle={'default'} />
       <ImageBackground
         source={localImage}
         resizeMode={'cover'}
         style={styles.imageBackground}>
+        <ModalMessage
+          modalMV={modalMV}
+          setModalMV={setModalMV}
+          navigation={navigation}
+        />
         <ScrollView style={styles.scrollView}>
           <View>
             <View style={styles.viewInput}>
               <Text style={styles.taitle}>{taitleText.taitle}</Text>
-              <TextInput
-                placeholder="Name"
-                placeholderTextColor={'white'}
-                style={styles.input}
-                textAlign={'left'}
-                textContentType="name"
-                autoComplete="name"
-                onChangeText={x => {
-                  submitHandler('username', x);
-                }}
-              />
-
-              {inputName.touched == true &&
-              inputName.isValidUserName == false ? (
-                <Text style={styles.alertHandler}>
-                  Enter your username with at least 6 characters and only
-                  letters and numbers are accepted
-                </Text>
-              ) : null}
-
               <TextInput
                 placeholder="Email"
                 placeholderTextColor={'white'}
@@ -160,19 +150,6 @@ const SignUp = ({navigation, route}) => {
               ) : null}
 
               <TextInput
-                placeholder="Phone"
-                placeholderTextColor={'white'}
-                style={styles.input}
-                textAlign={'left'}
-                textContentType="telephoneNumber"
-                autoComplete="tel"
-                keyboardType={'phone-pad'}
-                onChangeText={x => {
-                  submitHandler('Phone', x);
-                }}
-              />
-
-              <TextInput
                 placeholder="Password"
                 placeholderTextColor={'white'}
                 style={styles.input}
@@ -190,6 +167,24 @@ const SignUp = ({navigation, route}) => {
                 <Text style={styles.alertHandler}>
                   Enter a valid password of at least 6 characters
                 </Text>
+              ) : null}
+
+              <TextInput
+                placeholder="Confirm Password"
+                placeholderTextColor={'white'}
+                style={styles.input}
+                textAlign={'left'}
+                textContentType="password"
+                secureTextEntry={true}
+                autoComplete="password"
+                onChangeText={x => {
+                  submitHandler('confirmPassword', x);
+                }}
+              />
+
+              {inputConfirmPassword.touched == true &&
+              inputConfirmPassword.isValidConfirmPassword == false ? (
+                <Text style={styles.alertHandler}>Password does not match</Text>
               ) : null}
             </View>
 
@@ -217,9 +212,12 @@ const SignUp = ({navigation, route}) => {
   );
 };
 
-export default SignUp;
+export default CreateUserEmail;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   viewInput: {
     marginHorizontal: scale(20),
   },
@@ -233,6 +231,8 @@ const styles = StyleSheet.create({
     // backgroundColor: '#ffffff',
   },
   imageBackground: {
+    flex: 1,
+    justifyContent: 'center',
     // width: width,
     //height: height,
     //marginTop:scale(-10)

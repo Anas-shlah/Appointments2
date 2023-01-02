@@ -1,5 +1,12 @@
-import {Image, StyleSheet, Text, View, Dimensions} from 'react-native';
 import React from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import {scale} from 'react-native-size-matters';
 
 const localavatar = require('../../image/useravatar4.png');
@@ -8,9 +15,13 @@ const localavatar2 = require('../../image/useravatar.png');
 const {width, height} = Dimensions.get('window');
 
 const Cardspersonal = props => {
-  const {data} = props;
+  const {data, navigation} = props;
   return (
-    <View style={styles.wrapper}>
+    <TouchableOpacity
+      style={styles.wrapper}
+      onPress={() => {
+        navigation.navigate('Reservation', {dataUser: data});
+      }}>
       <Image
         source={localavatar}
         defaultSource={localavatar2}
@@ -18,7 +29,7 @@ const Cardspersonal = props => {
       />
       <Text style={styles.txname}>{data.name}</Text>
       <Text style={styles.txdepartment}>{data.department}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

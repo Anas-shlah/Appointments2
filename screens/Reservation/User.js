@@ -1,13 +1,13 @@
 import {StyleSheet, Text, Image, View, ScrollView} from 'react-native';
-import React, {useContext} from 'react';
+import React from 'react';
 import {scale} from 'react-native-size-matters';
-import {UserInfoContext} from '../../Context/UserContext';
 
+const iconLocation = require('../../image/location.png');
 const localavatar = require('../../image/useravatar4.png');
 const localavatar2 = require('../../image/useravatar.png');
-const User = () => {
-  const userInfoContext = useContext(UserInfoContext);
-  console.log('userInfoContext.name', userInfoContext);
+const User = props => {
+  const {dataUser} = props;
+  const userInfoContext = dataUser;
   return (
     <View style={styles.wrapper}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -25,7 +25,7 @@ const User = () => {
               {userInfoContext ? userInfoContext.department : 'department'}
             </Text>
             <Text style={styles.title3}>
-              📍
+              <Image source={iconLocation} style={styles.iconLocation} />
               {userInfoContext ? userInfoContext.location : 'location'}
             </Text>
           </View>
@@ -75,6 +75,10 @@ const styles = StyleSheet.create({
     borderRadius: scale(50),
     marginEnd: scale(10),
     backgroundColor: '#0f64f4',
+  },
+  iconLocation: {
+    width: scale(20),
+    height: scale(20),
   },
   colorText: {
     color: 'white',

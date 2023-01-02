@@ -15,15 +15,22 @@ import {HandlerPassword, HandlerEmail} from '../Handlerinput';
 import FireLogin from './LoginFirebase';
 const {height} = Dimensions.get('screen');
 const {width} = Dimensions.get('window');
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import ModalMessage from '../../../src/component/ModalMessage';
 const localImage = require('../../../image/test3.png');
 const taitleText = {
   taitle: 'Welcome\nBack',
-  Arrow: '➡',
+  Arrow: <Icon name="arrow-right-alt" size={scale(45)} color="#ffffff" />,
 };
 
 const Login = ({navigation, route}) => {
   const {SetuserInfoContext} = route.params;
-  // console.log('set user : ', setuser);
+
+  const [modalMV, setModalMV] = useState({
+    Visible: false,
+    Message: '',
+    type: '',
+  });
   const [inputEmail, changeInputEmail] = useState({
     valueEmail: '',
     isValidEmail: false,
@@ -59,6 +66,7 @@ const Login = ({navigation, route}) => {
           inputPassword.valuePassword,
           SetuserInfoContext,
           navigation,
+          setModalMV,
         )
       : changeInputEmail({
           valueEmail: inputEmail.valueEmail,
@@ -74,16 +82,19 @@ const Login = ({navigation, route}) => {
   return (
     <View style={styles.wrapper}>
       <StatusBar backgroundColor={'#4f5460'} barStyle={'default'} />
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <ImageBackground
-          source={localImage}
-          resizeMode={'stretch'}
-          style={styles.imageBackground}>
+      <ImageBackground
+        source={localImage}
+        resizeMode={'cover'}
+        style={styles.imageBackground}>
+        <ModalMessage
+          modalMV={modalMV}
+          setModalMV={setModalMV}
+          navigation={navigation}
+        />
+        <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.container2}>
             <Text style={styles.taitle}>{taitleText.taitle}</Text>
-            {/*Welcome\nBack*/}
           </View>
-
           <View style={styles.viewInput}>
             <TextInput
               placeholder="Email"
@@ -141,7 +152,7 @@ const Login = ({navigation, route}) => {
             <View style={styles.viewicon}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('SignUp');
+                  navigation.navigate('CreateUserEmail');
                 }}>
                 <Text style={styles.textNav}>Sign up</Text>
               </TouchableOpacity>
@@ -150,8 +161,8 @@ const Login = ({navigation, route}) => {
               </TouchableOpacity>
             </View>
           </View>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
@@ -179,6 +190,8 @@ const styles = StyleSheet.create({
    */
 
   imageBackground: {
+    flex: 1,
+    justifyContent: 'center',
     // width: width,
     // height: height,
     // marginTop: -50,
@@ -219,7 +232,7 @@ const styles = StyleSheet.create({
   },
   iconArrow: {
     color: 'white',
-    fontSize: scale(25),
+    // fontSize: scale(25),
     borderRadius: scale(50),
     padding: scale(20),
     backgroundColor: '#515662',
@@ -228,11 +241,5 @@ const styles = StyleSheet.create({
     color: '#feb048',
     fontSize: scale(15),
     textDecorationLine: 'underline',
-  },
-  scrollView: {
-    // paddingBottom: scale(20),
-    backgroundColor: 'white',
-    // width: width,
-    // height: height,
   },
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StatusBar,
   StyleSheet,
@@ -17,8 +17,12 @@ import Trending from './Trending';
 
 const feltersearch = require('../../image/feltersearch.png');
 const {width, height} = Dimensions.get('window');
+import {UserInfoContext} from '../../Context/UserContext';
+import AppointmentRequests from './AppointmentRequests';
 
-const Home = () => {
+const Home = ({navigation}) => {
+  const User = useContext(UserInfoContext);
+
   return (
     <View style={styles.wrapper}>
       <StatusBar backgroundColor={'#0f64f4'} barStyle={'default'} />
@@ -26,7 +30,7 @@ const Home = () => {
       <ScrollView>
         <View style={styles.wrapper1}>
           <View style={styles.greeting}>
-            <Greeting name={'anas'} />
+            <Greeting name={User.name} />
             <Text style={styles.welcome}>Welcome back</Text>
           </View>
           <View style={styles.searchview}>
@@ -35,14 +39,16 @@ const Home = () => {
           </View>
           <Text style={styles.titlefind}>Find what you want</Text>
           <View style={styles.trending}>
-            <Trending />
+            <Trending navigation={navigation} />
           </View>
         </View>
         <View style={styles.wrapper2}>
-          <Body />
-        </View>
-        <View>
-          <Text>Appointment Requests</Text>
+          <View>
+            <Body />
+          </View>
+          <View>
+            <AppointmentRequests />
+          </View>
         </View>
       </ScrollView>
     </View>

@@ -1,26 +1,42 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {scale} from 'react-native-size-matters';
 
-import {format} from 'date-fns';
+import {format, differenceInHours} from 'date-fns';
 import {TouchableOpacity} from 'react-native';
-import ButtonCancel from './Buttons/ButtonCancel';
+import ButtonCancel from './Buttons/ButtonCancelAccept';
+import RemainingTime from './RemainingTime';
+import {UserInfoContext} from '../../Context/UserContext';
+import ButtonDoneUnDone from './Buttons/ButtonDoneUnDone';
 
 const localavatar = require('../../image/useravatar4.png');
 const localavatar2 = require('../../image/useravatar.png');
 
 const CardsAppo = props => {
   const {data} = props;
-  const [backgroundColor, Setbackgroundcolor] = useState('#aae08f');
-  //console.log('data  ', data.id);
   const d = data.date.toDate();
   const date = format(d, 'YYY / MM / dd ');
   const time = format(d, 'hh : mm aa');
+  const Admin = useContext(UserInfoContext);
+  const Acceptable = data.Acceptable;
+  const differenceHours = differenceInHours(d, new Date());
+  var WithOrAt;
+  var nameto;
+  var colorBackground = '#aae08f';
+  if (data.to == Admin.email) {
+    WithOrAt = 'With:';
+    nameto = data.nameFrom;
+    colorBackground = '#E5D9B6';
+  } else {
+    WithOrAt = 'at:';
+    nameto = data.nameTo;
+  }
+  const [backgroundColor, Setbackgroundcolor] = useState(colorBackground);
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.viewremaining}>
-        <Text style={styles.remaining}>Remaining</Text>
+        <RemainingTime date={d} />
       </View>
       <View style={[styles.cardsAppo, {backgroundColor}]}>
         <View
@@ -30,7 +46,7 @@ const CardsAppo = props => {
             alignItems: 'center',
           }}>
           <Text style={[styles.text]}>
-            With: <Text style={{color: '#ffffff'}}>{data.nameTo}</Text>
+            {WithOrAt} <Text style={{color: '#ffffff'}}>{nameto}</Text>
           </Text>
           <Image
             source={localavatar}
@@ -44,8 +60,16 @@ const CardsAppo = props => {
         <Text style={[styles.text]}>
           Time: <Text style={{color: '#ffffff'}}>{time}</Text>
         </Text>
-        <View style={{alignItems: 'center'}}>
-          <ButtonCancel data={data} setColor={Setbackgroundcolor} />
+        <View>
+          {Acceptable != 'waiting' && differenceHours <= 0 ? (
+            <ButtonDoneUnDone data={data} setColor={Setbackgroundcolor} />
+          ) : (
+            <ButtonCancel
+              data={data}
+              setColor={Setbackgroundcolor}
+              Acceptable={Acceptable}
+            />
+          )}
         </View>
       </View>
     </View>
@@ -66,7 +90,7 @@ const styles = StyleSheet.create({
   },
   viewremaining: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   remaining: {},
   text: {

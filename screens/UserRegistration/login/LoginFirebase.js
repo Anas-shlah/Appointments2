@@ -6,9 +6,9 @@ const FireLogin = async (Email, Password, SetuserInfoContext, navigation) => {
   auth()
     .signInWithEmailAndPassword(Email, Password)
     .then(async () => {
-      console.log('User account created & signed in!'),
-        fetchingData(),
-        navigation.navigate('Reservation');
+      console.log('User account  & signed in!'),
+          navigation.navigate('Reception')
+         
     })
     .catch(error => {
       if (error.code === 'auth/email-already-in-use') {

@@ -16,10 +16,15 @@ export function HandlerPassword(enteredPassword) {
   }
   return true;
 }
-
-export function HandlerConfirmPassword(Password1, confirmPassword) {
-  if (confirmPassword.length != 0 && Password1 == confirmPassword) {
-    return true;
+export function AlertHandler(case1, case2, case3, touch1, touch2, touch3) {
+  if (touch1 == false || touch2 == false || touch3 == false) {
+    return alert('يرجى إدخال كافة البيانات');
   }
-  return false;
+  if (case1 == false || case2 == false || case3 == false) {
+    return alert('يرجى التأكد من صحة البيانات المدخلة');
+  }
+  return true;
+}
+export function addNumber(x, z) {
+  return x + z;
 }

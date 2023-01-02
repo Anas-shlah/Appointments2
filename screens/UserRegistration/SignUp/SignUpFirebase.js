@@ -1,6 +1,6 @@
 import auth from '@react-native-firebase/auth';
 
-const FireLogin = (Email, Password, navigation) => {
+const FireSignUp = (Email, Password, navigation) => {
   console.log('Email ', Email, 'Password  ', Password);
   auth()
     .createUserWithEmailAndPassword(Email, Password)
@@ -21,4 +21,4 @@ const FireLogin = (Email, Password, navigation) => {
     });
 };
 
-export default FireLogin;
+export default FireSignUp;
