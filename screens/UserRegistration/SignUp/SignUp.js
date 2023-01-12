@@ -14,7 +14,7 @@ import {
   HandlerPassword,
   HandlerEmail,
   AlertHandler,
-} from '../Handlerinput';
+} from '../../../src/utils/Handlerinput';
 import {scale} from 'react-native-size-matters';
 
 import {ImageBackground} from 'react-native';

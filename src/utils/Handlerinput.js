@@ -1,5 +1,5 @@
 export function HandlerUserName(enteredUserName) {
-  if (enteredUserName.length < 6) {
+  if (enteredUserName.length < 4) {
     return false;
   }
   return /^[a-zA-Z0-9]+$/.test(enteredUserName);
@@ -16,10 +16,15 @@ export function HandlerPassword(enteredPassword) {
   }
   return true;
 }
-
 export function HandlerConfirmPassword(Password1, confirmPassword) {
   if (confirmPassword.length != 0 && Password1 == confirmPassword) {
     return true;
   }
   return false;
+}
+export function HandlerLength(input, length) {
+  if (input.length < length) {
+    return false;
+  }
+  return true;
 }

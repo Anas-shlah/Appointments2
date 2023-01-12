@@ -22,7 +22,7 @@ const FireSignUp = (Email, Password, navigation, setModalMV) => {
           .signInWithEmailAndPassword(Email, Password)
           .then(async () => {
             console.log('User account  & signed in!'),
-              navigation.navigate('Reception');
+              navigation.replace('Reception');
           })
           .catch(error => {
             console.error(error);

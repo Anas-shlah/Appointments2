@@ -1,31 +1,27 @@
 import {
   StyleSheet,
-  Dimensions,
   StatusBar,
   Text,
   View,
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import React, {useState} from 'react';
+
 import {
-  HandlerUserName,
   HandlerPassword,
   HandlerEmail,
-  AlertHandler,
   HandlerConfirmPassword,
-} from '../Handlerinput';
+} from '../../../src/utils/Handlerinput';
 import {scale} from 'react-native-size-matters';
-
-import {ImageBackground} from 'react-native';
-import FireSignUp from './CreateUserEmailFirebase';
-const {height} = Dimensions.get('screen');
-const {width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import FireSignUp from './CreateUserEmailFirebase';
 import ModalMessage from '../../../src/component/ModalMessage';
+
 const CreateUserEmail = ({navigation, route}) => {
-  // const {setuser} = route.params;
   const [modalMV, setModalMV] = useState({
     Visible: false,
     Message: '',

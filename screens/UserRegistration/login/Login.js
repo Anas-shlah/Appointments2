@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {scale} from 'react-native-size-matters';
-import {HandlerPassword, HandlerEmail} from '../Handlerinput';
+import {HandlerPassword, HandlerEmail} from '../../../src/utils/Handlerinput';
 import FireLogin from './LoginFirebase';
 const {height} = Dimensions.get('screen');
 const {width} = Dimensions.get('window');

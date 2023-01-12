@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet, StatusBar} from 'react-native';
-import SignUp from './screens/UserRegistration/SignUp/SignUp';
+import {StyleSheet} from 'react-native';
 import CreateUserEmail from './screens/UserRegistration/CreateUserEmail/CreateUserEmail';
 import Login from './screens/UserRegistration/login/Login';
 import Reservation from './screens/Reservation/Reservation';
@@ -12,6 +11,7 @@ const Stack = createNativeStackNavigator();
 
 import {UserInfoContext} from './Context/UserContext';
 import Home from './screens/Home/Home';
+import InputInfoUser from './screens/GetStarted/InputInfoUser/InputInfoUser';
 const dataUser = {
   bio: 'react nayive develober and web app',
   businessAccount: true,
@@ -73,6 +73,15 @@ const App = () => {
               headerShown: false,
               animation: 'slide_from_right',
               contentStyle: {backgroundColor: '#dce1f4'},
+            }}
+          />
+          <Stack.Screen
+            name="InputInfoUser"
+            component={InputInfoUser}
+            options={{
+              headerShown: false,
+              animation: 'simple_push',
+              contentStyle: {backgroundColor: '#202b58'},
             }}
           />
         </Stack.Navigator>

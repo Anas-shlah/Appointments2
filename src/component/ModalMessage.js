@@ -4,6 +4,15 @@ import {scale} from 'react-native-size-matters';
 
 const ModalMessage = props => {
   const {modalMV, setModalMV, navigation} = props;
+
+  const actions = () => {
+    modalMV.type == 'verification'
+      ? navigation.replace('Reception')
+      : modalMV.type == 'Login'
+      ? navigation.replace('Login')
+      : null;
+  };
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -16,9 +25,7 @@ const ModalMessage = props => {
             Message: modalMV.Message,
             type: modalMV.type,
           });
-          modalMV.type == 'verification' || 'Login'
-            ? navigation.navigate('Login')
-            : null;
+          actions();
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -30,9 +37,7 @@ const ModalMessage = props => {
                   Visible: !modalMV.Visible,
                   Message: modalMV.Message,
                 });
-                modalMV.type == 'verification' || 'Login'
-                  ? navigation.navigate('Login')
-                  : null;
+                actions();
               }}>
               <Text style={styles.textStyle}>OK</Text>
             </Pressable>
