@@ -1,4 +1,4 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import auth from '@react-native-firebase/auth';
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   textemail: {
-    // color: 'blue',
     fontWeight: 'bold',
   },
   containerButton: {

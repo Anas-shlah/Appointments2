@@ -14,7 +14,6 @@ const Trending = props => {
   const User = useContext(UserInfoContext);
 
   fetchPersons(User, SetPersonsarry);
-  console.log('set data');
 
   const renderItem = ({item, index}) => {
     return <Cardspersonal data={item} navigation={navigation} />;

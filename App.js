@@ -1,32 +1,37 @@
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
+
 import CreateUserEmail from './screens/UserRegistration/CreateUserEmail/CreateUserEmail';
 import Login from './screens/UserRegistration/login/Login';
 import Reservation from './screens/Reservation/Reservation';
 import Reception from './screens/Reception/Reception';
+import Home from './screens/Home/Home';
+import InputInfoUser from './screens/GetStarted/InputInfoUser/InputInfoUser';
+import Splash from './screens/GetStarted/Splash/Splash';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
 import {UserInfoContext} from './Context/UserContext';
-import Home from './screens/Home/Home';
-import InputInfoUser from './screens/GetStarted/InputInfoUser/InputInfoUser';
-const dataUser = {
-  bio: 'react nayive develober and web app',
-  businessAccount: true,
-  department: 'department',
-  email: 'anis.sh83@gmail.com',
-  location: 'Germany - Luxembourg',
-  name: 'ANAS SH',
-  phone: '+963957638245',
-};
+
 const App = () => {
-  const [userInfoContext, SetuserInfoContext] = useState(dataUser);
+  const [userInfoContext, SetuserInfoContext] = useState();
+
   return (
     <UserInfoContext.Provider value={userInfoContext}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName={'Splash'}>
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{headerShown: false, animation: 'fade_from_bottom'}}
+            initialParams={{
+              SetuserInfoContext: SetuserInfoContext,
+              userInfoContext: userInfoContext,
+            }}
+          />
           <Stack.Screen
             name="CreateUserEmail"
             component={CreateUserEmail}
@@ -50,17 +55,9 @@ const App = () => {
             component={Home}
             options={{
               headerShown: false,
-              animation: 'flip',
+              animation: 'slide_from_left',
               contentStyle: {backgroundColor: '#dce1f4'},
             }}
-            initialParams={{
-              userInfoContext: userInfoContext,
-            }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{headerShown: false, animation: 'fade_from_bottom'}}
             initialParams={{
               SetuserInfoContext: SetuserInfoContext,
               userInfoContext: userInfoContext,
@@ -84,6 +81,19 @@ const App = () => {
               contentStyle: {backgroundColor: '#202b58'},
             }}
           />
+          <Stack.Screen
+            name="Splash"
+            component={Splash}
+            options={{
+              headerShown: false,
+              animation: 'simple_push',
+              contentStyle: {backgroundColor: '#202b58'},
+            }}
+            initialParams={{
+              SetuserInfoContext: SetuserInfoContext,
+              userInfoContext: userInfoContext,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </UserInfoContext.Provider>
@@ -91,12 +101,7 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-  },
+  container: {},
 });
 
 export default App;
-//5555  initialParams={{}}

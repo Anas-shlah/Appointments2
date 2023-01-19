@@ -7,7 +7,6 @@ const FireSignUp = (Email, Password, navigation, setModalMV) => {
   auth()
     .createUserWithEmailAndPassword(Email, Password)
     .then(async result => {
-      await user.sendEmailVerification();
       setModalMV({
         Visible: true,
         Message:

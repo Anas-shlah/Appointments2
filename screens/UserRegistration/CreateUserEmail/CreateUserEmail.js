@@ -222,20 +222,13 @@ const styles = StyleSheet.create({
     margin: scale(5),
     fontSize: scale(15),
   },
-  containers: {
-    // flex: 1,
-    // backgroundColor: '#ffffff',
-  },
+  containers: {},
   imageBackground: {
     flex: 1,
     justifyContent: 'center',
-    // width: width,
-    //height: height,
-    //marginTop:scale(-10)
-    // flex: 1,
   },
   container2: {
-    /** */ marginHorizontal: scale(20),
+    marginHorizontal: scale(20),
   },
   taitle: {
     color: 'white',
@@ -264,7 +257,6 @@ const styles = StyleSheet.create({
   },
   iconArrow: {
     color: 'white',
-    // fontSize: scale(25),
     borderRadius: scale(50),
     padding: scale(20),
     backgroundColor: '#515662',
@@ -274,11 +266,7 @@ const styles = StyleSheet.create({
     fontSize: scale(20),
     textDecorationLine: 'underline',
   },
-  scrollView: {
-    // flex: 1,
-    // marginBottom: scale(50),
-    // backgroundColor:'white'
-  },
+  scrollView: {},
   Signin: {
     marginHorizontal: scale(20),
     marginBottom: scale(12),

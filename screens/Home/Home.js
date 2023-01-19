@@ -4,11 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions,
   TextInput,
   Image,
   ScrollView,
 } from 'react-native';
+
 import {scale} from 'react-native-size-matters';
 import Body from './Body';
 import Greeting from './Greeting';
@@ -16,11 +16,10 @@ import Head from './Head';
 import Trending from './Trending';
 
 const feltersearch = require('../../image/feltersearch.png');
-const {width, height} = Dimensions.get('window');
 import {UserInfoContext} from '../../Context/UserContext';
 import AppointmentRequests from './AppointmentRequests';
 
-const Home = ({navigation}) => {
+const Home = ({navigation, route}) => {
   const User = useContext(UserInfoContext);
 
   return (
@@ -87,7 +86,6 @@ const styles = StyleSheet.create({
   feltersearch: {
     width: scale(40),
     height: scale(40),
-    // padding: scale(20),
     borderRadius: scale(10),
     backgroundColor: 'white',
     margin: scale(10),

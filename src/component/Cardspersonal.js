@@ -1,18 +1,9 @@
 import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {scale} from 'react-native-size-matters';
 
 const localavatar = require('../../image/useravatar4.png');
 const localavatar2 = require('../../image/useravatar.png');
-
-const {width, height} = Dimensions.get('window');
 
 const Cardspersonal = props => {
   const {data, navigation} = props;
@@ -42,8 +33,6 @@ const styles = StyleSheet.create({
     borderRadius: scale(12),
     margin: scale(5),
     alignItems: 'center',
-    //width: 150,
-    //height: 150,
   },
   image: {
     width: scale(100),

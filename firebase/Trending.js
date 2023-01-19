@@ -34,4 +34,5 @@ export const fetchPersons = (User, SetPersonsarry) => {
         console.log('im Trending error ', error);
       },
     );
+  return;
 };

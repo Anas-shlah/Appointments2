@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth';
 
 export const createProfileUser = opjData =>
   firestore()
-    .collection('Users')
+    .collection('UserAccount')
     .doc(auth().currentUser.email)
     .set(opjData)
     .then(() => {

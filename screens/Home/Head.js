@@ -20,7 +20,9 @@ const Head = () => {
           <Text style={styles.name}>{User.name}</Text>
           <View style={styles.locationview}>
             <Image source={iconLocation} style={styles.iconLocation} />
-            <Text style={styles.location}>{User.location}</Text>
+            <Text style={styles.location}>
+              {User.country} - {User.capital}
+            </Text>
           </View>
         </View>
         <Image

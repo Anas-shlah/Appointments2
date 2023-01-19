@@ -1,6 +1,5 @@
 import {
   StyleSheet,
-  Dimensions,
   StatusBar,
   Text,
   View,
@@ -10,14 +9,15 @@ import {
   ImageBackground,
 } from 'react-native';
 import React, {useState} from 'react';
+
 import {scale} from 'react-native-size-matters';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import {HandlerPassword, HandlerEmail} from '../../../src/utils/Handlerinput';
 import FireLogin from './LoginFirebase';
-const {height} = Dimensions.get('screen');
-const {width} = Dimensions.get('window');
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import ModalMessage from '../../../src/component/ModalMessage';
 const localImage = require('../../../image/test3.png');
+
 const taitleText = {
   taitle: 'Welcome\nBack',
   Arrow: <Icon name="arrow-right-alt" size={scale(45)} color="#ffffff" />,
@@ -81,17 +81,17 @@ const Login = ({navigation, route}) => {
   };
   return (
     <View style={styles.wrapper}>
-      <StatusBar backgroundColor={'#4f5460'} barStyle={'default'} />
-      <ImageBackground
-        source={localImage}
-        resizeMode={'cover'}
-        style={styles.imageBackground}>
-        <ModalMessage
-          modalMV={modalMV}
-          setModalMV={setModalMV}
-          navigation={navigation}
-        />
-        <ScrollView contentContainerStyle={styles.scrollView}>
+      <StatusBar backgroundColor={'#4b4f5b'} barStyle={'default'} />
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <ImageBackground
+          source={localImage}
+          resizeMode={'cover'}
+          style={styles.imageBackground}>
+          <ModalMessage
+            modalMV={modalMV}
+            setModalMV={setModalMV}
+            navigation={navigation}
+          />
           <View style={styles.container2}>
             <Text style={styles.taitle}>{taitleText.taitle}</Text>
           </View>
@@ -161,8 +161,8 @@ const Login = ({navigation, route}) => {
               </TouchableOpacity>
             </View>
           </View>
-        </ScrollView>
-      </ImageBackground>
+        </ImageBackground>
+      </ScrollView>
     </View>
   );
 };
@@ -182,19 +182,9 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: scale(15),
   },
-  /**
-   *
-   *
-   *
-   *
-   */
-
   imageBackground: {
     flex: 1,
     justifyContent: 'center',
-    // width: width,
-    // height: height,
-    // marginTop: -50,
   },
   container2: {
     marginHorizontal: scale(20),
@@ -202,7 +192,6 @@ const styles = StyleSheet.create({
   },
   container3: {
     marginHorizontal: scale(20),
-    // margingBottom: scale(50),
   },
   taitle: {
     color: 'white',
@@ -232,7 +221,6 @@ const styles = StyleSheet.create({
   },
   iconArrow: {
     color: 'white',
-    // fontSize: scale(25),
     borderRadius: scale(50),
     padding: scale(20),
     backgroundColor: '#515662',
