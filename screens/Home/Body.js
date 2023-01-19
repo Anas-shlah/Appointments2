@@ -10,13 +10,10 @@ import {
 } from '../../firebase/apiService';
 import {UserInfoContext} from '../../Context/UserContext';
 
-const {width, height} = Dimensions.get('screen');
-
 const Body = () => {
   const [arrydata, Setarrydata] = useState();
   const [postsFromTo, SetPostsFromTo] = useState([]);
   const [postsTo, SetPostsTo] = useState([]);
-  // const [postsFromTo, SetpostsFromTo] = useState([]);
 
   const User = useContext(UserInfoContext);
 
