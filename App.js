@@ -1,20 +1,20 @@
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 
-import CreateUserEmail from './screens/UserRegistration/CreateUserEmail/CreateUserEmail';
-import Login from './screens/UserRegistration/login/Login';
-import Reservation from './screens/Reservation/Reservation';
-import Reception from './screens/Reception/Reception';
-import Home from './screens/Home/Home';
-import InputInfoUser from './screens/GetStarted/InputInfoUser/InputInfoUser';
-import Splash from './screens/GetStarted/Splash/Splash';
+import CreateUserEmail from './src/screens/UserRegistration/CreateUserEmail/CreateUserEmail';
+import Login from './src/screens/UserRegistration/login/Login';
+import Reservation from './src/screens/Reservation/Reservation';
+import Reception from './src/screens/Reception/Reception';
+import Home from './src/screens/Home/Home';
+import InputInfoUser from './src/screens/GetStarted/InputInfoUser/InputInfoUser';
+import Splash from './src/screens/GetStarted/Splash/Splash';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import {UserInfoContext} from './Context/UserContext';
+import {UserInfoContext} from './src/Context/UserContext';
 
 const App = () => {
   const [userInfoContext, SetuserInfoContext] = useState();
