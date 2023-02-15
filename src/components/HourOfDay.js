@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import {format} from 'date-fns';
@@ -6,15 +6,11 @@ import {format} from 'date-fns';
 const HourOfDay = props => {
   const {data, indexs, select, Setselect, SetAppointment} = props;
   const {bookedUp, Acceptable, isYou} = data;
-  // const [bookedUp, SetbookedUp] = useState(data.bookedUp);
 
-  // console.log(' data ', data);
   const time = format(data.time, ' hh : mm aa');
   const onPresss = () => {
     Setselect(indexs);
     SetAppointment(data);
-    // SetbookedUp(true);
-    // console.log('sele ', select, ' ind ', indexs);
   };
   /*
   const opj = {

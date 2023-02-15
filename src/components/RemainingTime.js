@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {getTime, formatRelative} from 'date-fns';
 import React from 'react';
+import {scale} from 'react-native-size-matters';
 
 const RemainingTime = props => {
   const {date} = props;
@@ -27,17 +28,17 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#7978FF',
     borderColor: '#C47AFF',
-    borderWidth: 1,
+    borderWidth: scale(1),
     borderBottomWidth: 0,
-    padding: 5,
-    borderTopStartRadius: 10,
-    borderTopEndRadius: 10,
+    padding: scale(5),
+    borderTopStartRadius: scale(10),
+    borderTopEndRadius: scale(10),
   },
   textRemaining: {
-    fontSize: 15,
+    fontSize: scale(15),
     color: '#FDF0E0',
   },
   containernull: {
-    padding: 16,
+    padding: scale(16),
   },
 });

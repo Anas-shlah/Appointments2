@@ -22,7 +22,6 @@ const Splash = ({navigation, route}) => {
       } else {
         setNumColor(numColor + 1);
       }
-      console.log('interval');
     }, 1000);
     return () => {
       clearInterval(interval);

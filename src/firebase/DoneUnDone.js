@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-
+// OK and check
 export const UnDonefire = async data => {
   firestore()
     .collection('Reservations')
@@ -15,9 +15,10 @@ export const UnDonefire = async data => {
       to: data.to,
       dateAccept: data.dateAccept,
       dateUnDone: firestore.Timestamp.now(),
+      tokenFrom: data.tokenFrom,
+      tokento: data.tokento,
     })
     .then(() => {
-      //fetchAppoNext(SetData);
       console.log('UnDone Appointment');
     });
 };
@@ -37,9 +38,12 @@ export const Donefire = async data => {
       to: data.to,
       dateAccept: data.dateAccept,
       dateDone: firestore.Timestamp.now(),
+      tokenFrom: data.tokenFrom,
+      tokento: data.tokento,
+      tokenFrom: data.tokenFrom,
+      tokento: data.tokento,
     })
     .then(() => {
-      //fetchAppoNext(SetData);
       console.log('Done Appointments');
     });
 };

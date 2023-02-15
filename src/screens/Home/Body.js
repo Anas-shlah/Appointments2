@@ -2,12 +2,16 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 import React, {useState, useEffect, useContext} from 'react';
 import {scale} from 'react-native-size-matters';
 import CardsAppo from '../../components/CardsAppo';
-import {fetchAppoNextFrom, fetchAppoNextTo} from '../../firebase/apiService';
+import {
+  fetchAppoNextFrom,
+  fetchAppoNextFromTO,
+  fetchAppoNextTo,
+} from '../../firebase/fetchAppoNext';
 import {UserInfoContext} from '../../Context/UserContext';
 
 const Body = () => {
   const [arrydata, Setarrydata] = useState();
-  const [postsFromTo, SetPostsFromTo] = useState([]);
+  const [postsFrom, SetPostsFrom] = useState([]);
   const [postsTo, SetPostsTo] = useState([]);
 
   const User = useContext(UserInfoContext);
@@ -15,20 +19,17 @@ const Body = () => {
   useEffect(() => {
     const arry = [];
     arry.push(...postsTo);
-    arry.push(...postsFromTo);
+    arry.push(...postsFrom);
 
     Setarrydata(
       arry.sort(function (a, b) {
         return a.date - b.date;
       }),
     );
-  }, [postsFromTo, postsTo]);
+  }, [postsFrom, postsTo]);
 
-  getPosts();
-  function getPosts() {
-    fetchAppoNextFrom(User.email, SetPostsFromTo);
-    fetchAppoNextTo(User.email, SetPostsTo);
-  }
+  fetchAppoNextFromTO(User.email, 'from', SetPostsFrom);
+  fetchAppoNextFromTO(User.email, 'to', SetPostsFrom);
 
   const renderItem = ({item, index}) => {
     return <CardsAppo data={item} />;

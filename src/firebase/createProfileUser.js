@@ -7,6 +7,6 @@ export const createProfileUser = opjData =>
     .doc(auth().currentUser.email)
     .set(opjData)
     .then(() => {
-      console.log('User added!');
+      console.log('User added! ', opjData);
       auth().currentUser.updateProfile({displayName: opjData.name});
     });

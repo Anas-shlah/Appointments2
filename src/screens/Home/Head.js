@@ -8,7 +8,7 @@ const localavatar2 = require('../../assets/image/useravatar.png');
 
 import {UserInfoContext} from '../../Context/UserContext';
 
-const Head = () => {
+const Head = ({navigation}) => {
   const User = useContext(UserInfoContext);
 
   return (
@@ -19,6 +19,7 @@ const Head = () => {
           size={scale(30)}
           color="#fff"
           style={styles.imagesettings}
+          onPress={() => navigation.navigate('settings')}
         />
         <View style={{alignItems: 'center'}}>
           <Text style={styles.name}>{User.name}</Text>

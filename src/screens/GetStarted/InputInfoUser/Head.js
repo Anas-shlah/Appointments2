@@ -11,7 +11,7 @@ const Head = () => {
           Please, complete the data entry
         </Text>
         <View style={styles.horizontal} />
-        <Text style={[styles.text]}>
+        <Text style={[styles.text, styles.title3]}>
           Minutes and we have a more wonderful experience... We are waiting for
           you
         </Text>
@@ -43,6 +43,10 @@ const styles = StyleSheet.create({
   },
   title2: {
     fontSize: scale(20),
+    fontWeight: '400',
+  },
+  title3: {
+    fontSize: scale(15),
   },
   text: {
     color: '#ffffff',

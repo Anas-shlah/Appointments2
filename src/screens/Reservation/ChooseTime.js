@@ -8,13 +8,10 @@ import {
 } from 'date-fns';
 import HourOfDay from '../../components/HourOfDay';
 import {scale} from 'react-native-size-matters';
-import {fetchAppoNextFrom, fetchAppoNextTo} from '../../firebase/ChoswTime';
-import {fetchAppoNextFrom2, fetchAppoNextTo2} from '../../firebase/ChoswTime2';
+import {fetchAppointment} from '../../firebase/ChoswTime';
+
 import {UserInfoContext} from '../../Context/UserContext';
 
-//start
-
-//END
 const ChooseTime = props => {
   const {chosenDay, SetAppointment, dataUser} = props;
   const {email: AdminEmail} = useContext(UserInfoContext);
@@ -23,33 +20,8 @@ const ChooseTime = props => {
   const [AdminFrom, SetAdminFrom] = useState([]);
   const [UserTo, SetUserTo] = useState([]);
   const [AdminTo, SetAdminTo] = useState([]);
-  var isClearFrom1;
-  var isClearTo1;
-  var isClearFrom2;
-  var isClearTo2;
-  //clear old data
+
   useEffect(() => {
-    isClearFrom1 = true;
-    isClearTo1 = true;
-    isClearFrom2 = true;
-    isClearTo2 = true;
-    getPosts();
-  }, []);
-  //Get data admin && user
-  useEffect(() => {
-    // delet old data for refresh
-    isClearFrom1 == true && UserFrom.length > 0
-      ? (isClearFrom1 = false)
-      : (isClearFrom1 = true);
-    isClearTo1 == true && UserTo.length > 0
-      ? (isClearTo1 = false)
-      : (isClearTo1 = true);
-    isClearFrom2 == true && AdminFrom.length > 0
-      ? (isClearFrom2 = false)
-      : (isClearFrom2 = true);
-    isClearTo2 == true && AdminTo.length > 0
-      ? (isClearTo2 = false)
-      : (isClearTo2 = true);
     // add data
     const arry = [];
     arry.push(...UserFrom);
@@ -57,16 +29,13 @@ const ChooseTime = props => {
     arry.push(...AdminFrom);
     arry.push(...AdminTo);
     Setarrydata(arry);
+    return;
   }, [UserFrom, UserTo, AdminFrom, AdminTo]);
 
-  getPosts();
-  function getPosts() {
-    fetchAppoNextFrom(dataUser.email, SetUserFrom, isClearFrom1);
-    fetchAppoNextTo(dataUser.email, SetUserTo, isClearTo1);
-    fetchAppoNextFrom2(AdminEmail, SetAdminFrom, isClearFrom2);
-    fetchAppoNextTo2(AdminEmail, SetAdminTo, isClearTo2);
-  }
-  //END Get data admin user
+  fetchAppointment(dataUser.email, 'from', SetUserFrom);
+  fetchAppointment(dataUser.email, 'to', SetUserTo);
+  fetchAppointment(AdminEmail, 'to', SetAdminFrom);
+  fetchAppointment(AdminEmail, 'to', SetAdminTo);
 
   //create item Choose time
   const daynow = roundToNearestMinutes(new Date(), {
@@ -107,10 +76,9 @@ const ChooseTime = props => {
     }
     // END create item Choose time
 
-    //////
+    //
     // Enter data in item choose time
     hourArr2.map((item, id) => {
-      const formatItem = format(item, 'YYY/MM/dd/hh/mm aa');
       const filterdateLevel1 = arrydata.filter(
         (x, {from, to}) =>
           format(x.date.toDate(), 'YYY/MM/dd/ hh:mm aa') ==
@@ -186,13 +154,7 @@ const ChooseTime = props => {
           }
         }
       }
-      /*
-        if (id % 2 == 0) {
-          opj.bookedUp = true;
-        }
-        */
       hourThisToday.push(opj);
-      // console.log(format(item, 'YYY / MM / dd / hh / mm / aa '));
     });
   }
   const [select, Setselect] = useState();
@@ -209,8 +171,6 @@ const ChooseTime = props => {
       />
     );
   };
-
-  // console.log(' chosenDay ', format(chosenDay, 'YYY / MM / dd '));
 
   return (
     <View style={styles.container}>

@@ -4,12 +4,11 @@ import {scale} from 'react-native-size-matters';
 
 import DayOfMonth from '../../components/DayOfMonth';
 
-const keyExtractor = (item, index) => index.toString();
-
 const Schedules = props => {
   const {dateArr, chosenDay} = props;
   const [select, Setselect] = useState(0);
 
+  const keyExtractor = (item, index) => index.toString();
   const renderItem = ({item, index}) => {
     return (
       <DayOfMonth

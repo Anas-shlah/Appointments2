@@ -14,6 +14,7 @@ const localavatar2 = require('../assets/image/useravatar.png');
 
 const CardsAppo = props => {
   const {data} = props;
+  console.log(data.key, 'hi');
   const d = data.date.toDate();
   const date = format(d, 'YYY / MM / dd ');
   const time = format(d, 'hh : mm aa');

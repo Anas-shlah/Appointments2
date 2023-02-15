@@ -1,7 +1,9 @@
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 
 export function getUserData(SetuserInfoContext, setNavigationTo) {
+  auth().currentUser.reload();
   auth().onAuthStateChanged(isuserLogin => {
     if (isuserLogin) {
       auth().currentUser.reload();
@@ -16,9 +18,11 @@ export function getUserData(SetuserInfoContext, setNavigationTo) {
     }
   });
 
-  function onResult(QuerySnapshot) {
+  async function onResult(QuerySnapshot) {
     if (QuerySnapshot.exists) {
       const data = QuerySnapshot._data;
+      data.tokenMessaging = await AsyncStorage.getItem('fcmtoken');
+      createProfileUser(data);
       SetuserInfoContext(data);
       console.log('get data don');
       setNavigationTo('Home');
@@ -27,6 +31,15 @@ export function getUserData(SetuserInfoContext, setNavigationTo) {
       setNavigationTo('Login');
     }
   }
+
+  const createProfileUser = opjData =>
+    firestore()
+      .collection('UserAccount')
+      .doc(auth().currentUser.email)
+      .set(opjData)
+      .then(() => {
+        console.log('User added! ', opjData);
+      });
 
   function onError(error) {
     console.error(error);

@@ -8,25 +8,11 @@ import {fetchAppointmentRequestsTo} from '../../firebase/AppointmentRequestsF';
 import {UserInfoContext} from '../../Context/UserContext';
 
 const AppointmentRequests = () => {
-  const [arrydata, Setarrydata] = useState();
-  const [postsTo, SetPostsTo] = useState([]);
+  const [postsdata, Setpostsdata] = useState();
 
   const Admin = useContext(UserInfoContext);
 
-  useEffect(() => {
-    const arry = [];
-    arry.push(...postsTo);
-    Setarrydata(
-      arry.sort(function (a, b) {
-        return a.date - b.date;
-      }),
-    );
-  }, [postsTo]);
-
-  getPosts();
-  function getPosts() {
-    fetchAppointmentRequestsTo(Admin.email, SetPostsTo);
-  }
+  fetchAppointmentRequestsTo(Admin.email, Setpostsdata);
 
   const renderItem = ({item, index}) => {
     return <CardsAppo data={item} />;
@@ -37,7 +23,7 @@ const AppointmentRequests = () => {
         <Text style={styles.title}>Appointment Requests</Text>
       </View>
       <FlatList
-        data={arrydata}
+        data={postsdata}
         keyExtractor={item => item.id}
         renderItem={renderItem}
         horizontal={true}
@@ -75,7 +61,3 @@ const styles = StyleSheet.create({
     marginHorizontal: scale(22),
   },
 });
-
-/*
-AppointmentRequests
-*/

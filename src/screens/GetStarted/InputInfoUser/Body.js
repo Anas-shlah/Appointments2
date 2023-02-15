@@ -1,7 +1,8 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CustomTextInput from '../../../components/Inputs/TextInput/CustomTextInput';
 import CustomSwitch from '../../../components/Inputs/CustomSwitch/CustomSwitch';
@@ -11,6 +12,7 @@ import TextErrorMessage from '../../../components/TextErrorMessage/TextErrorMess
 import {HandlerLength, HandlerUserName} from '../../../utils/Handlerinput';
 import {errorMessage} from '../../../utils/errorMessage';
 import {createProfileUser} from '../../../firebase/createProfileUser';
+import {getUserData} from '../../../firebase/GetinfoUser';
 
 const initialInputValue = {
   value: '',
@@ -19,6 +21,8 @@ const initialInputValue = {
 };
 
 const Body = props => {
+  const [getData, setGetData] = useState(false);
+  getUserData(setGetData);
   const [switchv, setSwitchv] = useState(false);
   const [inputName, setInputName] = useState(initialInputValue);
   const [inputPhone, setInputPhone] = useState(initialInputValue);
@@ -26,7 +30,43 @@ const Body = props => {
   const [inputCapital, setInputCapital] = useState(initialInputValue);
   const [inputDepartment, setInputDepartment] = useState(initialInputValue);
   const [inputBio, setInputBio] = useState(initialInputValue);
-
+  useEffect(() => {
+    if (getData) {
+      setInputName({
+        value: getData.name,
+        isValid: true,
+        touched: true,
+      });
+      setInputPhone({
+        value: getData.phone,
+        isValid: true,
+        touched: true,
+      });
+      setInputCountry({
+        value: getData.country,
+        isValid: true,
+        touched: true,
+      });
+      setInputCapital({
+        value: getData.capital,
+        isValid: true,
+        touched: true,
+      });
+      getData.businessAccount
+        ? (setSwitchv(true),
+          setInputDepartment({
+            value: getData.department,
+            isValid: true,
+            touched: true,
+          }),
+          setInputBio({
+            value: getData.bio,
+            isValid: true,
+            touched: true,
+          }))
+        : null;
+    }
+  }, [getData]);
   const touchAll = () => {
     setInputName({
       value: inputName.value,
@@ -83,7 +123,8 @@ const Body = props => {
       }
     }
   };
-  const ToFirebase = () => {
+  const ToFirebase = async () => {
+    let tokenMessaging = await AsyncStorage.getItem('fcmtoken');
     const opjData = {
       name: inputName.value,
       phone: inputPhone.value,
@@ -93,6 +134,7 @@ const Body = props => {
       bio: inputBio.value,
       businessAccount: switchv,
       email: auth().currentUser.email,
+      tokenMessaging: tokenMessaging,
     };
     createProfileUser(opjData).then(() => {
       props.navigation.replace('Home');
@@ -107,13 +149,13 @@ const Body = props => {
         onChangeText={v =>
           setInputName({
             value: v.trimStart(),
-            isValid: HandlerUserName(v),
+            isValid: HandlerLength(v, 2),
             touched: true,
           })
         }
       />
       {inputName.touched == true && inputName.isValid == false ? (
-        <TextErrorMessage text={errorMessage.errorUserName} />
+        <TextErrorMessage text={errorMessage.errorLength(2)} />
       ) : null}
       <CustomTextInput
         title={'E-mail'}

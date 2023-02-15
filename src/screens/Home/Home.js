@@ -5,7 +5,6 @@ import {
   Text,
   View,
   TextInput,
-  Image,
   ScrollView,
 } from 'react-native';
 
@@ -26,7 +25,7 @@ const Home = ({navigation, route}) => {
   return (
     <View style={styles.wrapper}>
       <StatusBar backgroundColor={'#0f64f4'} barStyle={'default'} />
-      <Head />
+      <Head navigation={navigation} />
       <ScrollView>
         <View style={styles.wrapper1}>
           <View style={styles.greeting}>

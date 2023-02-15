@@ -25,9 +25,6 @@ export default CustomSwitch;
 
 const styles = StyleSheet.create({
   container: {
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    // alignItems: 'center',
     marginVertical: scale(10),
   },
   container2: {
@@ -40,7 +37,7 @@ const styles = StyleSheet.create({
     fontSize: scale(18),
   },
   note: {
-    // fontSize: scale(15),
+    fontSize: scale(13),
     color: '#7c80a7',
   },
 });

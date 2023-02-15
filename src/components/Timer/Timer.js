@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Text} from 'react-native';
+import {scale} from 'react-native-size-matters';
 import {formatTimer} from '../../utils/helperFunctions';
 
 var initialFunctionPeriodicallySeconds = 0;
@@ -46,6 +47,6 @@ function Timer(props) {
     }
   }, [seconds]);
 
-  return <Text>{formatTimer(seconds)}</Text>;
+  return <Text style={{fontSize: scale(25)}}>{formatTimer(seconds)}</Text>;
 }
 export default Timer;

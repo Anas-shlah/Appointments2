@@ -9,10 +9,10 @@ import {UserInfoContext} from '../../Context/UserContext';
 
 const Trending = props => {
   const {navigation} = props;
-  const [Personsarry, SetPersonsarry] = useState();
+  const [Users, setUsers] = useState();
   const User = useContext(UserInfoContext);
 
-  fetchPersons(User, SetPersonsarry);
+  fetchPersons(User, setUsers);
 
   const renderItem = ({item, index}) => {
     return <Cardspersonal data={item} navigation={navigation} />;
@@ -20,7 +20,7 @@ const Trending = props => {
   return (
     <View>
       <FlatList
-        data={Personsarry}
+        data={Users}
         renderItem={renderItem}
         horizontal={true}
         ListEmptyComponent={

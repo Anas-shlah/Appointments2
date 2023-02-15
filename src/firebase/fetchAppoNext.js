@@ -1,12 +1,12 @@
 import firestore from '@react-native-firebase/firestore';
 import React, {useEffect} from 'react';
-// OK and check
-export const fetchAppointmentRequestsTo = async (email, setposts) => {
+// ok and check
+export const fetchAppoNextFromTO = async (email, type, setposts) => {
   useEffect(() => {
     const subscriber = firestore()
       .collection('Reservations')
-      .where('to', '==', email)
-      .where('Acceptable', '==', 'waiting')
+      .where(type, '==', email)
+      .where('Acceptable', '==', 'accept')
       .where('bookingStatus', '==', 'bookedUp')
       .orderBy('date', 'asc')
       .onSnapshot(querySnapshot => {

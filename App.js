@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 
 import CreateUserEmail from './src/screens/UserRegistration/CreateUserEmail/CreateUserEmail';
@@ -8,17 +8,24 @@ import Reception from './src/screens/Reception/Reception';
 import Home from './src/screens/Home/Home';
 import InputInfoUser from './src/screens/GetStarted/InputInfoUser/InputInfoUser';
 import Splash from './src/screens/GetStarted/Splash/Splash';
+import Settings from './src/screens/settings/Settings';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
-
 import {UserInfoContext} from './src/Context/UserContext';
+import {
+  NotificationListner,
+  requestUserPermission,
+} from './src/utils/pushnotification_helper';
 
 const App = () => {
   const [userInfoContext, SetuserInfoContext] = useState();
-
+  useEffect(() => {
+    requestUserPermission();
+    NotificationListner();
+  }, []);
   return (
     <UserInfoContext.Provider value={userInfoContext}>
       <NavigationContainer>
@@ -73,6 +80,17 @@ const App = () => {
             }}
           />
           <Stack.Screen
+            name="settings"
+            component={Settings}
+            options={{
+              headerShown: true,
+              animation: 'slide_from_left',
+              headerTitleAlign: 'center',
+              headerStyle: styles.headerSettings,
+              contentStyle: {backgroundColor: '#33bcbf'},
+            }}
+          />
+          <Stack.Screen
             name="InputInfoUser"
             component={InputInfoUser}
             options={{
@@ -102,6 +120,9 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {},
+  headerSettings: {
+    backgroundColor: '#00b4ad',
+  },
 });
 
 export default App;
