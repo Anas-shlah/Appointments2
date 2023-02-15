@@ -19,7 +19,7 @@ import Body from './Body';
 import {UserInfoContext} from '../../Context/UserContext';
 import AppointmentRequests from './AppointmentRequests';
 
-const Home = ({navigation, route}) => {
+const Home = ({navigation}) => {
   const User = useContext(UserInfoContext);
 
   return (

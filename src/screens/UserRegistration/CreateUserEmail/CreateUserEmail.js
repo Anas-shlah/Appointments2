@@ -21,7 +21,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import FireSignUp from './CreateUserEmailFirebase';
 import ModalMessage from '../../../components/ModalMessage';
 
-const CreateUserEmail = ({navigation, route}) => {
+const CreateUserEmail = ({navigation}) => {
   const [modalMV, setModalMV] = useState({
     Visible: false,
     Message: '',

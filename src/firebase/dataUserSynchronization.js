@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 
 export function getUserData(SetuserInfoContext, setNavigationTo) {
-  auth().currentUser.reload();
   auth().onAuthStateChanged(isuserLogin => {
     if (isuserLogin) {
       auth().currentUser.reload();

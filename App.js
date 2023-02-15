@@ -43,19 +43,11 @@ const App = () => {
             name="CreateUserEmail"
             component={CreateUserEmail}
             options={{headerShown: false, animation: 'flip'}}
-            initialParams={{
-              SetuserInfoContext: SetuserInfoContext,
-              userInfoContext: userInfoContext,
-            }}
           />
           <Stack.Screen
             name="Reception"
             component={Reception}
             options={{headerShown: false, animation: 'flip'}}
-            initialParams={{
-              SetuserInfoContext: SetuserInfoContext,
-              userInfoContext: userInfoContext,
-            }}
           />
           <Stack.Screen
             name="Home"
@@ -64,10 +56,6 @@ const App = () => {
               headerShown: false,
               animation: 'slide_from_left',
               contentStyle: {backgroundColor: '#dce1f4'},
-            }}
-            initialParams={{
-              SetuserInfoContext: SetuserInfoContext,
-              userInfoContext: userInfoContext,
             }}
           />
           <Stack.Screen
